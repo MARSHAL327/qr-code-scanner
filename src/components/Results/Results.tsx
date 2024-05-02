@@ -5,11 +5,14 @@ import CopyButton from "../CopyButton/CopyButton.tsx";
 
 const Results: FC = observer(() => {
     function replaceLinks(text: string) {
-        const linkRegex = /(https?:\/\/[^\s]+)/g;
+        const linkRegex = /(https?:\/\/[^\s]+|\b\w+\.\w{2,3}\b)/g;
         const parts = text.split(linkRegex);
 
         return parts.map((part, idx) => {
             if (part.match(linkRegex)) {
+                if( part.indexOf("https") === -1 )
+                    part = "https://" + part
+
                 return (
                     <a key={idx} href={part} target="_blank" rel="noopener noreferrer">
                         {part}
