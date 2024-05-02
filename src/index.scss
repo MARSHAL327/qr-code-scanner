@@ -1,0 +1,146 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("assets/fonts/Roboto/Roboto-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Roboto Light";
+    src: url("assets/fonts/Roboto/Roboto-Light.ttf");
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("assets/fonts/Roboto/Roboto-Regular.ttf");
+}
+
+@mixin center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body {
+    @include center;
+    background-image: url("assets/imgs/bg.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding: 50px 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.wrapper{
+    width: 1000px;
+}
+
+p {
+    display: block;
+    color: #000;
+    margin: 10px 0;
+}
+
+.title {
+    font-family: "Roboto Light", sans-serif;
+    color: #fff;
+    font-size: 40px;
+    text-align: center;
+
+    &_small{
+        font-size: 30px;
+    }
+}
+
+.white-block{
+    margin-top: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px 40px;
+}
+
+.results{
+    &__item__title{
+        font-size: 22px;
+    }
+
+    &__item__content{
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+
+        & p{
+            @include center;
+        }
+
+        & img{
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            background-color: #000000;
+            object-fit: cover;
+        }
+    }
+
+    & .title_small, & .empty{
+        text-align: center;
+    }
+
+    &__icon{
+        width: 50px;
+        height: 50px;
+        margin-top: 10px;
+    }
+}
+
+.workspace {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+
+    &__item {
+        @include center;
+        flex-direction: column;
+        width: 500px;
+        height: 200px;
+        background-color: rgba(255, 255, 255, .4);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 1);
+    }
+}
+
+.text{
+    &__white{
+        color: #ffffff;
+    }
+
+    &__bold{
+        font-weight: bold;
+    }
+}
+
+.button__white {
+    background-color: #fff;
+    border-radius: 100px;
+    border: 2px solid #fff;
+    padding: 12px 25px;
+    font-family: "Roboto Bold", sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    transition: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    &:hover {
+        background-color: transparent;
+        cursor: pointer;
+        transition: .3s;
+        color: #ffffff;
+
+        & svg {
+            fill: #ffffff;
+            transition: .3s;
+        }
+    }
+}
