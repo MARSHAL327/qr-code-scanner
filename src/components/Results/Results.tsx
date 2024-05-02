@@ -29,10 +29,10 @@ const Results: FC = observer(() => {
             <div className={"results"}>
                 {
                     QrReaderStore.reverseResults.map((result) => (
-                        <div className={"results__item white-block"} key={result.id}>
+                        <div className={"results__item"} key={result.id}>
                             <div className={"results__item__title"}>
-                                <span>Сканирование #{result.id}</span>
                                 <CopyButton text={result.text} key={result.id}/>
+                                <span>Сканирование #{result.id}</span>
                             </div>
                             <div className={"results__item__content"}>
                                 <p>{replaceLinks(result.text)}</p>

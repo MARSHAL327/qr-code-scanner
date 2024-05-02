@@ -19,6 +19,12 @@
     justify-content: center;
 }
 
+@mixin blur {
+    background-color: rgba(255, 255, 255, .5);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 1);
+}
+
 $blue-color: #024488;
 
 body {
@@ -31,7 +37,7 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-.wrapper{
+.wrapper {
     width: 1000px;
 }
 
@@ -47,39 +53,34 @@ p {
     font-size: 40px;
     text-align: center;
 
-    &_small{
+    &_small {
         font-size: 30px;
     }
 }
 
-.white-block{
-    margin-top: 30px;
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 20px 40px;
-}
-
-.results{
-    &__item{
+.results {
+    &__item {
+        margin-top: 30px;
         box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
 
-        &__title{
+        &__title {
             @include center;
+            @include blur;
             justify-content: space-between;
             font-size: 22px;
-            margin-bottom: 20px;
+            padding: 20px 30px;
+            border-radius: 15px 15px 0 0;
         }
 
-        &__content{
+        &__content {
             display: flex;
             gap: 20px;
             justify-content: space-between;
+            background-color: #fff;
+            border-radius: 0 0 15px 15px;
+            padding: 20px 30px;
 
-            //& p{
-            //    @include center;
-            //}
-
-            & img{
+            & img {
                 width: 100px;
                 height: 100px;
                 border-radius: 10px;
@@ -90,12 +91,11 @@ p {
     }
 
 
-
-    & .title_small, & .empty{
+    & .title_small, & .empty {
         text-align: center;
     }
 
-    &__icon{
+    &__icon {
         width: 50px;
         height: 50px;
         margin-top: 10px;
@@ -112,20 +112,18 @@ p {
         flex-direction: column;
         width: 500px;
         height: 200px;
-        background-color: rgba(255, 255, 255, .4);
+        @include blur;
         border-radius: 15px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 1);
         box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
     }
 }
 
-.text{
-    &__white{
+.text {
+    &__white {
         color: #ffffff;
     }
 
-    &__bold{
+    &__bold {
         font-weight: bold;
     }
 }
