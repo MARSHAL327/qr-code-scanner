@@ -1,19 +1,28 @@
-import {FC} from "react";
+import {FC, useState} from "react";
 import Copy from "../../assets/icons/Copy.svg?react"
 import {observer} from "mobx-react-lite";
 import styles from "./CopyButton.module.scss";
-import CopyButtonStore from "./CopyButton.store.ts";
 
 interface CopyButtonProps {
     text: string;
 }
 
 const CopyButton: FC<CopyButtonProps> = observer(({text}) => {
-    console.log(styles)
+    const [textIsCopied, setTextIsCopied] = useState(false);
+
+    async function copyText(text: string) {
+        setTextIsCopied(true)
+        await navigator.clipboard.writeText(text)
+
+        setTimeout(() => {
+            setTextIsCopied(false)
+        }, 750);
+    }
+
     return (
-        <div className={styles.copyBtn} onClick={CopyButtonStore.copyText.bind(CopyButtonStore, text)}>
+        <div className={styles.copyBtn} onClick={copyText.bind(null, text)}>
             <Copy/>
-            {CopyButtonStore.textIsCopied ? "Скопировано!" : "Копировать"}
+            {textIsCopied ? "Скопировано!" : "Копировать"}
         </div>
 
     )

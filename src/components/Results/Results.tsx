@@ -29,7 +29,7 @@ const Results: FC = observer(() => {
                         <div className={"results__item white-block"} key={result.id}>
                             <div className={"results__item__title"}>
                                 <span>Сканирование #{result.id}</span>
-                                <CopyButton text={result.text}/>
+                                <CopyButton text={result.text} key={result.id}/>
                             </div>
                             <div className={"results__item__content"}>
                                 <p>{replaceLinks(result.text)}</p>
