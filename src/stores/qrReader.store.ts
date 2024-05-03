@@ -27,12 +27,9 @@ class QrReaderStore {
         this.results = [...this.results, result];
     }
 
-    async readQr(image: string) {
-        const imageFile = await fetch(image).then((resp) => resp.blob());
-        const imageFileReadResults = await readBarcodesFromImageFile(
-            imageFile,
-            readerOptions,
-        );
+    async readImage(image: string) {
+        const blob = await fetch(image).then((resp) => resp.blob());
+        const imageFileReadResults = await  this.readBlob(blob);
 
         if( imageFileReadResults.length === 0 || !imageFileReadResults[0].isValid ){
             toast.error('При считывании произошла ошибка')
@@ -42,18 +39,11 @@ class QrReaderStore {
         return imageFileReadResults
     }
 
-    async readQrBlob(imageFile: Blob) {
-        const imageFileReadResults = await readBarcodesFromImageFile(
+    async readBlob(imageFile: Blob) {
+        return await readBarcodesFromImageFile(
             imageFile,
             readerOptions,
         );
-
-        if( imageFileReadResults.length === 0 || !imageFileReadResults[0].isValid ){
-            toast.error('При считывании произошла ошибка')
-            return null;
-        }
-
-        return imageFileReadResults
     }
 }
 

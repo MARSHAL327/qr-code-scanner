@@ -1,11 +1,13 @@
 import {makeAutoObservable} from "mobx";
 import {createRef} from "react";
 import QrReaderStore from "../../stores/qrReader.store.ts";
+
 declare class ImageCapture {
     constructor(videoTrack: MediaStreamTrack);
 
     grabFrame(): Promise<ImageBitmap>;
 }
+
 class CameraReaderStore {
     stream: MediaStream | null = null
     videoRef = createRef<HTMLthis.videoRef.current>()
@@ -32,15 +34,12 @@ class CameraReaderStore {
     //     }
     // }
 
-    drawToDom(imageBitmap: ImageBitmap){
-        const imageElement: HTMLElement | null = document.getElementById("video-frame")
+    async processFrame(blob: Blob) {
+        const res = await QrReaderStore.readBlob(blob)
 
-        if(imageElement)
-            imageElement.src = URL.createObjectURL(imageBitmap);
-    }
-
-    processFrame(imageBitmap: ImageBitmap) {
-        // console.log(imageBitmap)
+        if (res.length > 0) {
+            console.log(res)
+        }
     }
 
     readCameraFrame() {
@@ -49,28 +48,17 @@ class CameraReaderStore {
         canvas.height = 200;
 
         const context = canvas.getContext('2d');
-        if( !context ) return
+        if (!context) return
 
         context.drawImage(this.videoRef.current, 0, 0, canvas.width, canvas.height);
 
-        canvas.toBlob((blob) => {
-            if (blob) {
-                const imageElement: any = document.getElementById("video-frame")
-                imageElement.src = URL.createObjectURL(blob);
+        canvas.toBlob( (blob) => {
+            if (!blob) return
 
-                createImageBitmap(blob)
-                    .then((imageBitmap) => {
-                        // Обработка полученного кадра
-                        this.processFrame(imageBitmap);
-
-                        // Запуск считывания следующего кадра
-                        requestAnimationFrame(this.readCameraFrame.bind(this));
-                    })
-                    .catch((error) => {
-                        console.error('Ошибка создания ImageBitmap:', error);
-                    });
-            }
+            this.processFrame(blob);
         }, 'image/jpeg', 0.9);
+
+        requestAnimationFrame(this.readCameraFrame.bind(this));
     }
 
     async startCamera() {
@@ -79,53 +67,8 @@ class CameraReaderStore {
 
             if (this.videoRef?.current) {
                 this.videoRef.current.srcObject = this.stream;
-
                 this.readCameraFrame()
-
-                // Считывание кадров с камеры
-
-
-            // const mediaRecorder = new MediaRecorder(this.stream, {mimeType: 'video/webm'});
-            // const recordedChunks: BlobPart[] | undefined = [];
-            //     console.log(mediaRecorder)
-            //
-            // mediaRecorder.addEventListener('dataavailable', function (event) {
-            //     console.log(event.data)
-            //
-            //     const recordedBlob = new Blob([event.data], {type: 'video/webm'});
-            //
-            //     // recordedChunks.push(event.data);
-            //     QrReaderStore.readQrBlob(recordedBlob)
-            //
-            //     mediaRecorder.requestData();
-            // });
-            //
-            // mediaRecorder.start();
-            //
-            // setTimeout(function () {
-            //     console.log(recordedChunks)
-            //     mediaRecorder.stop();
-            // }, 2000);
-            //
-            // mediaRecorder.addEventListener('stop', function () {
-            //     console.log("stopped")
-            //     // console.log(recordedChunks)
-            //     // const recordedBlob = new Blob(recordedChunks, {type: 'video/webm'});
-            //     //
-            //     // QrReaderStore.readQrBlob(recordedBlob)
-            //     // console.log(recordedBlob)
-            //
-            //     // Save the recorded blob to a file or do something else with it
-            // });
-
-                // const mediaRecorder = new MediaRecorder(this.stream, { mimeType: 'video/webm' });
-                // mediaRecorder.ondataavailable = this.handleDataAvailable;
-                //
-                // mediaRecorder.start(1000);
-
-
             }
-
         } catch (error) {
             console.error('Error accessing camera:', error);
         }
