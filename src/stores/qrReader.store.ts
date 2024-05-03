@@ -41,6 +41,20 @@ class QrReaderStore {
 
         return imageFileReadResults
     }
+
+    async readQrBlob(imageFile: Blob) {
+        const imageFileReadResults = await readBarcodesFromImageFile(
+            imageFile,
+            readerOptions,
+        );
+
+        if( imageFileReadResults.length === 0 || !imageFileReadResults[0].isValid ){
+            toast.error('При считывании произошла ошибка')
+            return null;
+        }
+
+        return imageFileReadResults
+    }
 }
 
 export default new QrReaderStore()
