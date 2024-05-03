@@ -109,12 +109,13 @@ p {
 
     &__item {
         @include center;
+        @include blur;
         flex-direction: column;
         width: 500px;
-        height: 200px;
-        @include blur;
+        height: 270px;
         border-radius: 15px;
         box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+        overflow: hidden;
 
         &_dashed{
             border-style: dashed;

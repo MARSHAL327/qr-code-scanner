@@ -13,7 +13,7 @@ class QrFileReaderStore {
 
         reader.onload = async (e) => {
             const contents = e.target?.result as string;
-            const imageFileReadResults = await QrReaderStore.readQr(contents)
+            const imageFileReadResults = await QrReaderStore.readImage(contents)
 
             if(!imageFileReadResults) return
 

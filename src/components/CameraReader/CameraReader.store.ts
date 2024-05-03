@@ -6,7 +6,6 @@ import qrReaderStore from "../../stores/qrReader.store.ts";
 class CameraReaderStore {
     stream: MediaStream | null = null
     videoRef = createRef<HTMLVideoElement>()
-    canvasRef = createRef<HTMLCanvasElement>()
     canvasParams = {
         width: 200,
         height: 200,

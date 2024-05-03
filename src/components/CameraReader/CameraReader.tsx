@@ -15,11 +15,16 @@ const CameraReader: FC = observer(() => {
         CameraReaderStore.stream ?
             <>
                 <video ref={CameraReaderStore.videoRef} autoPlay playsInline></video>
-                <div className={styles.videoFrame} style={{width: CameraReaderStore.canvasParams.width, height: CameraReaderStore.canvasParams.height}} />
-                {/*<canvas id={"frame"} className={styles.videoFrame}/>*/}
+                <div className={styles.aim} style={{
+                    width: CameraReaderStore.canvasParams.width,
+                    height: CameraReaderStore.canvasParams.height,
+                    top: `calc((100% - ${CameraReaderStore.canvasParams.height}px + 8px) / 2)`,
+                    left: `calc((100% - ${CameraReaderStore.canvasParams.width}px - 14px) / 2)`,
+                }}/>
+                {/*<canvas id={"frame"} className={styles.aim}/>*/}
             </> :
             <div className={"button__white"}>
-            <Camera/>
+                <Camera/>
                 Предоставить доступ к камере
             </div>
     )
