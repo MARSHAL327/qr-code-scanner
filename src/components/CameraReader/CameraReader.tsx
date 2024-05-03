@@ -14,9 +14,9 @@ const CameraReader: FC = observer(() => {
     return (
         CameraReaderStore.stream ?
             <>
-                <canvas ref={CameraReaderStore.canvasRef} className={styles.videoFrame}/>
                 <video ref={CameraReaderStore.videoRef} autoPlay playsInline></video>
-                <canvas id={"frame"} className={styles.videoFrame}/>
+                <div className={styles.videoFrame} style={{width: CameraReaderStore.canvasParams.width, height: CameraReaderStore.canvasParams.height}} />
+                {/*<canvas id={"frame"} className={styles.videoFrame}/>*/}
             </> :
             <div className={"button__white"}>
             <Camera/>
