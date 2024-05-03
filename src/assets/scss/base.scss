@@ -12,3 +12,62 @@
 
 $blue-color: #024488;
 $red-color: #B01919;
+
+.center{
+    @include center;
+}
+
+.button__white {
+    @include center;
+    background-color: #fff;
+    border-radius: 100px;
+    border: 2px solid #fff;
+    padding: 12px 25px;
+    font-family: "Roboto Bold", sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    transition: .3s;
+    gap: 5px;
+
+    & svg {
+        width: 20px;
+        height: auto;
+    }
+
+    &:hover {
+        background-color: transparent;
+        cursor: pointer;
+        transition: .3s;
+        color: #ffffff;
+
+        & svg {
+            fill: #ffffff;
+            transition: .3s;
+        }
+    }
+}
+
+.text {
+    &__white {
+        color: #ffffff;
+    }
+
+    &__bold {
+        font-weight: bold;
+    }
+}
+
+.title {
+    font-family: "Roboto Light", sans-serif;
+    color: #fff;
+    font-size: 40px;
+    text-align: center;
+
+    &_small {
+        font-size: 30px;
+    }
+}
+
+.gap-10{
+    gap: 10px;
+}

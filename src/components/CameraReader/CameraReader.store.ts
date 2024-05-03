@@ -12,6 +12,7 @@ class CameraReaderStore {
         height: 200,
     }
     cameraLoading: boolean = true
+    cameraStopped: boolean = true
     constraints = {
         video: {
             width: {
@@ -44,7 +45,7 @@ class CameraReaderStore {
     }
 
     readCameraFrame() {
-        const canvas = document.getElementById("frame") as HTMLCanvasElement || document.createElement("canvas");
+        const canvas = document.createElement("canvas");
         const video = this.videoRef.current;
 
         if (!canvas || !video) return
@@ -73,6 +74,7 @@ class CameraReaderStore {
     }
 
     async startCamera() {
+        this.cameraStopped = false
         this.cameraLoading = true
 
         try {
@@ -99,6 +101,8 @@ class CameraReaderStore {
         const stream = this.videoRef.current.srcObject as MediaStream;
         const tracks = stream.getTracks();
         tracks.forEach(track => track.stop());
+
+        this.cameraStopped = true
     };
 
     constructor() {

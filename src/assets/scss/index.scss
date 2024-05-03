@@ -35,17 +35,6 @@ p {
     margin: 10px 0;
 }
 
-.title {
-    font-family: "Roboto Light", sans-serif;
-    color: #fff;
-    font-size: 40px;
-    text-align: center;
-
-    &_small {
-        font-size: 30px;
-    }
-}
-
 .workspace {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -63,43 +52,6 @@ p {
 
         &_dashed{
             border-style: dashed;
-        }
-    }
-}
-
-.text {
-    &__white {
-        color: #ffffff;
-    }
-
-    &__bold {
-        font-weight: bold;
-    }
-}
-
-.button__white {
-    background-color: #fff;
-    border-radius: 100px;
-    border: 2px solid #fff;
-    padding: 12px 25px;
-    font-family: "Roboto Bold", sans-serif;
-    font-weight: bold;
-    font-size: 14px;
-    transition: .3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-
-    &:hover {
-        background-color: transparent;
-        cursor: pointer;
-        transition: .3s;
-        color: #ffffff;
-
-        & svg {
-            fill: #ffffff;
-            transition: .3s;
         }
     }
 }
@@ -123,14 +75,6 @@ p {
         opacity: 1;
         transition: .3s;
     }
-}
-
-.drag-area[draggable="true"] {
-    pointer-events: auto;
-}
-
-.center{
-    @include center;
 }
 
 @media (max-width: 1000px) {
