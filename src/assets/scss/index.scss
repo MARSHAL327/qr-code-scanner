@@ -129,6 +129,10 @@ p {
     pointer-events: auto;
 }
 
+.center{
+    @include center;
+}
+
 @media (max-width: 1000px) {
     body{
         padding: 20px;
