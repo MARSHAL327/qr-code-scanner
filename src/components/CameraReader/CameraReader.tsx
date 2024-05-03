@@ -2,7 +2,7 @@ import Camera from "../../assets/icons/Camera.svg?react"
 import {FC, useEffect} from "react";
 import {observer} from "mobx-react-lite";
 import CameraReaderStore from "./CameraReader.store.ts";
-import "./CameraReader.module.scss"
+import styles from "./CameraReader.module.scss"
 
 const CameraReader: FC = observer(() => {
     useEffect(() => {
@@ -14,8 +14,9 @@ const CameraReader: FC = observer(() => {
     return (
         CameraReaderStore.stream ?
             <>
+                <canvas ref={CameraReaderStore.canvasRef} className={styles.videoFrame}/>
                 <video ref={CameraReaderStore.videoRef} autoPlay playsInline></video>
-                <img src="" alt="" id={"video-frame"}/>
+                <canvas id={"frame"} className={styles.videoFrame}/>
             </> :
             <div className={"button__white"}>
             <Camera/>

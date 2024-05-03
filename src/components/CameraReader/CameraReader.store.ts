@@ -2,15 +2,10 @@ import {makeAutoObservable} from "mobx";
 import {createRef} from "react";
 import QrReaderStore from "../../stores/qrReader.store.ts";
 
-declare class ImageCapture {
-    constructor(videoTrack: MediaStreamTrack);
-
-    grabFrame(): Promise<ImageBitmap>;
-}
-
 class CameraReaderStore {
     stream: MediaStream | null = null
-    videoRef = createRef<HTMLthis.videoRef.current>()
+    videoRef = createRef<HTMLVideoElement>()
+    canvasRef = createRef<HTMLCanvasElement>()
     constraints = {
         video: {
             width: {
@@ -26,14 +21,6 @@ class CameraReaderStore {
         },
     };
 
-    // async handleDataAvailable(event) {
-    //     if (event.data.size > 0) {
-    //         const data: Blob = event.data;
-    //         // I think I need to pipe to an intermediate stream? Not sure how tho
-    //         data.stream().pipeTo(writable);
-    //     }
-    // }
-
     async processFrame(blob: Blob) {
         const res = await QrReaderStore.readBlob(blob)
 
@@ -42,17 +29,39 @@ class CameraReaderStore {
         }
     }
 
-    readCameraFrame() {
-        const canvas = document.createElement('canvas');
-        canvas.width = 400;
-        canvas.height = 200;
+    drawBorder(x: number, y: number, video: HTMLVideoElement) {
+        const canvas = this.canvasRef.current;
+        if (!canvas || !video) return
+
+        canvas.width = video.clientWidth;
+        canvas.height = video.clientHeight;
 
         const context = canvas.getContext('2d');
         if (!context) return
 
-        context.drawImage(this.videoRef.current, 0, 0, canvas.width, canvas.height);
+        context.strokeStyle = "#FF0000";
+        context.strokeRect(x, y, canvas.width - x, canvas.height - y);
+    }
 
-        canvas.toBlob( (blob) => {
+    readCameraFrame() {
+        const canvas = document.getElementById("frame") || document.createElement("canvas");
+        const video = this.videoRef.current;
+
+        if (!canvas || !video) return
+
+        // video.insertAdjacentElement('afterend', canvas);
+        canvas.width = video.clientWidth;
+        canvas.height = video.clientHeight;
+
+        const context = canvas.getContext('2d');
+        if (!context) return
+
+        const [x, y] = [200, 10]
+
+        context.drawImage(video, x, y, canvas.width - x, canvas.height - y);
+        this.drawBorder(x, y, video)
+
+        canvas.toBlob((blob) => {
             if (!blob) return
 
             this.processFrame(blob);
