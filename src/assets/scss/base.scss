@@ -1,0 +1,14 @@
+@mixin center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin blur {
+    background-color: rgba(255, 255, 255, .5);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 1);
+}
+
+$blue-color: #024488;
+$red-color: #B01919;

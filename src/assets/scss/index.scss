@@ -1,35 +1,23 @@
+@import "base";
+
 @font-face {
     font-family: "Roboto";
-    src: url("assets/fonts/Roboto/Roboto-Regular.ttf");
+    src: url("../fonts/Roboto/Roboto-Regular.ttf");
 }
 
 @font-face {
     font-family: "Roboto Light";
-    src: url("assets/fonts/Roboto/Roboto-Light.ttf");
+    src: url("../fonts/Roboto/Roboto-Light.ttf");
 }
 
 @font-face {
     font-family: "Roboto";
-    src: url("assets/fonts/Roboto/Roboto-Regular.ttf");
+    src: url("../fonts/Roboto/Roboto-Regular.ttf");
 }
-
-@mixin center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-@mixin blur {
-    background-color: rgba(255, 255, 255, .5);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 1);
-}
-
-$blue-color: #024488;
 
 body {
     @include center;
-    background-image: url("assets/imgs/bg.svg");
+    background-image: url("../imgs/bg.svg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -58,52 +46,9 @@ p {
     }
 }
 
-.results {
-    &__item {
-        margin-top: 30px;
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
-
-        &__title {
-            @include center;
-            @include blur;
-            justify-content: space-between;
-            font-size: 22px;
-            padding: 20px 30px;
-            border-radius: 15px 15px 0 0;
-        }
-
-        &__content {
-            display: flex;
-            gap: 20px;
-            justify-content: space-between;
-            background-color: #fff;
-            border-radius: 0 0 15px 15px;
-            padding: 20px 30px;
-
-            & img {
-                width: 100px;
-                height: 100px;
-                border-radius: 10px;
-                background-color: #000000;
-                object-fit: cover;
-            }
-        }
-    }
-
-
-    & .title_small, & .empty {
-        text-align: center;
-    }
-
-    &__icon {
-        width: 50px;
-        height: 50px;
-        margin-top: 10px;
-    }
-}
-
 .workspace {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     margin-top: 30px;
 
@@ -111,7 +56,6 @@ p {
         @include center;
         @include blur;
         flex-direction: column;
-        width: 500px;
         height: 270px;
         border-radius: 15px;
         box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
@@ -183,4 +127,24 @@ p {
 
 .drag-area[draggable="true"] {
     pointer-events: auto;
+}
+
+@media (max-width: 1000px) {
+    body{
+        padding: 20px;
+    }
+
+    .wrapper{
+        width: 100%;
+    }
+
+    .workspace{
+        grid-template-columns: 1fr;
+    }
+
+    .button__white{
+        margin: 0 15px;
+        padding: 10px;
+        font-size: 12px;
+    }
 }

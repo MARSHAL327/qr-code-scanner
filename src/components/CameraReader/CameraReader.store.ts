@@ -30,6 +30,8 @@ class CameraReaderStore {
 
         if (res.length <= 0) return
 
+        console.log(res)
+
         qrReaderStore.addResult({
             src: URL.createObjectURL(blob),
             text: res[0].text,

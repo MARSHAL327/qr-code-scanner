@@ -1,4 +1,4 @@
-import "./QrFileReader.module.scss";
+import style from "./QrFileReader.module.scss";
 import Image from "../../assets/icons/Image.svg?react"
 import {FC} from "react";
 import {observer} from "mobx-react-lite";
@@ -12,7 +12,7 @@ const QrFileReader: FC = observer(() => {
                 <Image/>
                 Выбрать изображение
             </label>
-            <p className={"text__white"}>
+            <p className={"text__white " + style.text__white}>
                 или перетащите его в это поле
             </p>
         </>

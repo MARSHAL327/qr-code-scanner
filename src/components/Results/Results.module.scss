@@ -1,0 +1,54 @@
+@import "../../assets/scss/base";
+
+.results {
+    &__item {
+        margin-top: 30px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 20px 30px;
+
+        &__title {
+            @include center;
+            @include blur;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            font-size: 22px;
+            padding: 20px 30px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        &__content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            background-color: #fff;
+            border-radius: 0 0 15px 15px;
+            padding: 20px 30px;
+
+            & img {
+                width: 100px;
+                height: 100px;
+                border-radius: 10px;
+                background-color: #000000;
+                object-fit: cover;
+            }
+        }
+    }
+
+
+    & .title_small, & .empty {
+        text-align: center;
+    }
+
+    &__icon {
+        width: 50px;
+        height: 50px;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .results__item__title{
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+}
