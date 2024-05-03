@@ -5,6 +5,8 @@ import CameraReaderStore from "./CameraReader.store.ts";
 import styles from "./CameraReader.module.scss"
 
 const CameraReader: FC = observer(() => {
+    const [canvasWidth, canvasHeight] = [CameraReaderStore.canvasParams.width, CameraReaderStore.canvasParams.height]
+
     useEffect(() => {
         CameraReaderStore.startCamera()
 
@@ -16,12 +18,17 @@ const CameraReader: FC = observer(() => {
             <>
                 <video ref={CameraReaderStore.videoRef} autoPlay playsInline></video>
                 <div className={styles.aim} style={{
-                    width: CameraReaderStore.canvasParams.width,
-                    height: CameraReaderStore.canvasParams.height,
-                    top: `calc((100% - ${CameraReaderStore.canvasParams.height}px + 8px) / 2)`,
-                    left: `calc((100% - ${CameraReaderStore.canvasParams.width}px - 14px) / 2)`,
+                    width: canvasWidth,
+                    height: canvasHeight,
+                    top: `calc((100% - ${canvasHeight}px) / 2)`,
+                    left: `calc((100% - ${canvasWidth}px - 22px) / 2)`,
                 }}/>
-                {/*<canvas id={"frame"} className={styles.aim}/>*/}
+                <canvas id={"frame"} className={styles.aim} style={{
+                    width: canvasWidth,
+                    height: canvasHeight,
+                    top: `calc((100% - ${canvasHeight}px) / 2)`,
+                    left: `calc((100% - ${canvasWidth}px - 22px) / 2)`,
+                }}/>
             </> :
             <div className={"button__white"}>
                 <Camera/>
