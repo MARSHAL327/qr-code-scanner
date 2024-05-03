@@ -11,6 +11,7 @@ class CameraReaderStore {
         width: 200,
         height: 200,
     }
+    cameraLoading: boolean = true
     constraints = {
         video: {
             width: {
@@ -72,6 +73,8 @@ class CameraReaderStore {
     }
 
     async startCamera() {
+        this.cameraLoading = true
+
         try {
             this.stream = await navigator.mediaDevices.getUserMedia(this.constraints);
 
@@ -85,6 +88,8 @@ class CameraReaderStore {
             if(error === "DOMException: Permission denied")
                 toast.error("Не предоставлен доступ к камере")
         }
+
+        this.cameraLoading = false
     }
 
     stopCamera = () => {

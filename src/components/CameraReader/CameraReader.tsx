@@ -1,8 +1,10 @@
 import Camera from "../../assets/icons/Camera.svg?react"
+import Spinner from "../../assets/icons/Spinner.svg?react"
 import {FC, useEffect} from "react";
 import {observer} from "mobx-react-lite";
 import CameraReaderStore from "./CameraReader.store.ts";
 import styles from "./CameraReader.module.scss"
+import "./../../assets/scss/spinner.scss"
 
 const CameraReader: FC = observer(() => {
     const [canvasWidth, canvasHeight] = [CameraReaderStore.canvasParams.width, CameraReaderStore.canvasParams.height]
@@ -24,10 +26,15 @@ const CameraReader: FC = observer(() => {
                     left: `calc((100% - ${canvasWidth}px) / 2)`,
                 }}/>
             </> :
-            <div className={"center"} style={{gap: 10}}>
-                <Camera style={{fill: "#fff"}} />
-                <p className={"text__white"}>Предоставьте доступ к камере</p>
-            </div>
+            CameraReaderStore.cameraLoading ?
+                <div className={"text__white center"} style={{gap: 10}}>
+                    <Spinner className={"spinner"}/>
+                    Загрузка камеры...
+                </div> :
+                <div className={"center"} style={{gap: 10}}>
+                    <Camera style={{fill: "#fff"}}/>
+                    <p className={"text__white"}>Предоставьте доступ к камере</p>
+                </div>
     )
 })
 
