@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import {ChangeEvent, DragEvent} from "react";
 import QrReaderStore from "../../stores/qrReader.store.ts";
+import ResultsStore from "../Results/Results.store.ts";
 
 class QrFileReaderStore {
     dragIsActive = false
@@ -17,7 +18,7 @@ class QrFileReaderStore {
 
             if(!imageFileReadResults) return
 
-            QrReaderStore.addResult({
+            ResultsStore.addResult({
                 text: imageFileReadResults[0].text,
                 src: contents,
                 id: 0,

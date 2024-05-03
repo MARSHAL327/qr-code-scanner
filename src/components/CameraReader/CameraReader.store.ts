@@ -1,8 +1,8 @@
 import {makeAutoObservable} from "mobx";
 import {createRef} from "react";
 import QrReaderStore from "../../stores/qrReader.store.ts";
-import qrReaderStore from "../../stores/qrReader.store.ts";
 import toast from "react-hot-toast";
+import ResultsStore from "../Results/Results.store.ts";
 
 class CameraReaderStore {
     stream: MediaStream | null = null
@@ -13,6 +13,7 @@ class CameraReaderStore {
     }
     cameraLoading: boolean = true
     cameraStopped: boolean = true
+    scannedSuccess: boolean = false
     constraints = {
         video: {
             width: {
@@ -29,13 +30,14 @@ class CameraReaderStore {
     };
 
     async processFrame(blob: Blob) {
+        this.scannedSuccess = true
         const res = await QrReaderStore.readBlob(blob)
 
         if (res.length <= 0) return
 
         console.log(res)
 
-        qrReaderStore.addResult({
+        ResultsStore.addResult({
             src: URL.createObjectURL(blob),
             text: res[0].text,
             id: 0
@@ -86,9 +88,6 @@ class CameraReaderStore {
             }
         } catch (error) {
             console.error('Error accessing camera:', error);
-
-            if(error === "DOMException: Permission denied")
-                toast.error("Не предоставлен доступ к камере")
         }
 
         this.cameraLoading = false

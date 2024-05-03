@@ -1,8 +1,8 @@
 import {FC} from "react";
-import QrReaderStore from "../../stores/qrReader.store.ts";
 import {observer} from "mobx-react-lite";
 import CopyButton from "../CopyButton/CopyButton.tsx";
 import styles from "./Results.module.scss";
+import ResultsStore from "./Results.store.ts";
 
 const Results: FC = observer(() => {
     function replaceLinks(text: string) {
@@ -26,10 +26,10 @@ const Results: FC = observer(() => {
     }
 
     return (
-        QrReaderStore.reverseResults.length > 0 &&
+        ResultsStore.reverseResults.length > 0 &&
             <div className={styles.results}>
                 {
-                    QrReaderStore.reverseResults.map((result) => (
+                    ResultsStore.reverseResults.map((result) => (
                         <div className={styles.results__item} key={result.id}>
                             <div className={styles.results__item__title}>
                                 <CopyButton text={result.text} key={result.id}/>
