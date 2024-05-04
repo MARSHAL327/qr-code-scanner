@@ -3,17 +3,25 @@ import {createRef} from "react";
 import QrReaderStore from "../../stores/qrReader.store.ts";
 import ResultsStore from "../Results/Results.store.ts";
 
+interface ICanvasParams{
+    width: number;
+    height: number;
+}
+
+/**
+ * Класс для считывания qr кода с камеры
+ */
 class CameraReaderStore {
     stream: MediaStream | null = null
     videoRef = createRef<HTMLVideoElement>()
-    canvasParams = {
+    canvasParams: ICanvasParams = {
         width: 200,
         height: 200,
     }
     cameraLoading: boolean = true
     cameraStopped: boolean = true
     scannedSuccess: boolean = false
-    constraints = {
+    constraints: MediaStreamConstraints = {
         video: {
             width: {
                 min: 1280,
@@ -29,6 +37,11 @@ class CameraReaderStore {
         },
     };
 
+    /**
+     * Обрабатывает кадр и если обнаружен qr, добавляет его в массив
+     *
+     * @param blob
+     */
     async processFrame(blob: Blob) {
         this.scannedSuccess = true
         const res = await QrReaderStore.readBlob(blob)
@@ -44,6 +57,9 @@ class CameraReaderStore {
         this.stopCamera()
     }
 
+    /**
+     * Добавляет кадр на canvas
+     */
     readCameraFrame() {
         const canvas = document.createElement("canvas");
         const video = this.videoRef.current;
@@ -73,6 +89,9 @@ class CameraReaderStore {
         requestAnimationFrame(this.readCameraFrame.bind(this));
     }
 
+    /**
+     * Запускает стрим камеры. Сбрасывает все параметры. Добавляет стрим в тег video
+     */
     async startCamera() {
         this.scannedSuccess = false
         this.cameraStopped = false
@@ -92,6 +111,9 @@ class CameraReaderStore {
         this.cameraLoading = false
     }
 
+    /**
+     * Останавливает камеру. Пробегается по всем стримам и останавливает их.
+     */
     stopCamera = () => {
         if (!this.stream)
             return

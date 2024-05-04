@@ -3,13 +3,21 @@ import {ChangeEvent, DragEvent} from "react";
 import QrReaderStore from "../../stores/qrReader.store.ts";
 import ResultsStore from "../Results/Results.store.ts";
 
+/**
+ *
+ * Класс для обработки данных из файла
+ *
+ */
 class QrFileReaderStore {
     dragIsActive = false
 
-    handleFileChange(input: ChangeEvent<HTMLInputElement>) {
-        this.addFileToResults(input.target.files?.[0])
-    }
-
+    /**
+     * Добавляет файл в таблицу результатов.
+     * Считывает изображение из параметра, затем считывает qr код
+     * и если qr код есть, он добавляется в общую таблицу результатов
+     *
+     * @param file
+     */
     addFileToResults (file: File | undefined ) {
         if(!file) return
 
@@ -31,6 +39,11 @@ class QrFileReaderStore {
         reader.readAsDataURL(file);
     }
 
+    /**
+     * Для обработки событий dragenter, dragover, dragleave
+     *
+     * @param e
+     */
     handleDrag (e: DragEvent<HTMLDivElement>) {
         e.preventDefault();
         e.stopPropagation();
@@ -42,6 +55,11 @@ class QrFileReaderStore {
         }
     }
 
+    /**
+     * Для обработки события, когда пользователь отпускает объект
+     *
+     * @param e
+     */
     handleDrop(e: DragEvent<HTMLDivElement>) {
         e.preventDefault();
         e.stopPropagation();
@@ -50,6 +68,15 @@ class QrFileReaderStore {
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
             this.addFileToResults(e.dataTransfer.files[0]);
         }
+    }
+
+    /**
+     * Используется для обработки ChangeEvent
+     *
+     * @param input
+     */
+    handleFileChange(input: ChangeEvent<HTMLInputElement>) {
+        this.addFileToResults(input.target.files?.[0])
     }
 
     constructor() {
