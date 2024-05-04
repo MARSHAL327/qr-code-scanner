@@ -8,7 +8,7 @@ const QrFileReader: FC = observer(() => {
     return (
         <>
             <label className={"button__white"}>
-                <input id="file-upload" type="file" onChange={QrFileReaderStore.handleFileChange}/>
+                <input id="file-upload" type="file" onChange={QrFileReaderStore.handleFileChange.bind(QrFileReaderStore)}/>
                 <Image/>
                 Выбрать изображение
             </label>

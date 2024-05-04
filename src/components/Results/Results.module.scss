@@ -17,7 +17,6 @@
 
         &__content {
             display: flex;
-            flex-wrap: wrap;
             gap: 20px;
             justify-content: space-between;
             background-color: #fff;
@@ -50,5 +49,9 @@
     .results__item__title{
         flex-direction: column-reverse;
         gap: 10px;
+    }
+
+    .results__item__content{
+        flex-wrap: wrap;
     }
 }
