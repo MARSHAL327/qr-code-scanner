@@ -1,7 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import {createRef} from "react";
 import QrReaderStore from "../../stores/qrReader.store.ts";
-import toast from "react-hot-toast";
 import ResultsStore from "../Results/Results.store.ts";
 
 class CameraReaderStore {
@@ -33,9 +32,7 @@ class CameraReaderStore {
         this.scannedSuccess = true
         const res = await QrReaderStore.readBlob(blob)
 
-        if (res.length <= 0) return
-
-        console.log(res)
+        if (res.length <= 0 || this.cameraStopped) return
 
         ResultsStore.addResult({
             src: URL.createObjectURL(blob),
@@ -76,11 +73,13 @@ class CameraReaderStore {
     }
 
     async startCamera() {
+        this.scannedSuccess = false
         this.cameraStopped = false
         this.cameraLoading = true
 
         try {
             this.stream = await navigator.mediaDevices.getUserMedia(this.constraints);
+            console.log(this.videoRef?.current)
 
             if (this.videoRef?.current) {
                 this.videoRef.current.srcObject = this.stream;
@@ -94,12 +93,11 @@ class CameraReaderStore {
     }
 
     stopCamera = () => {
-        if (!this.videoRef.current || !this.videoRef.current.srcObject)
+        if (!this.stream)
             return
 
-        const stream = this.videoRef.current.srcObject as MediaStream;
-        const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop());
+        const tracks = this.stream.getTracks();
+        tracks.forEach(track => track.enabled = false);
 
         this.cameraStopped = true
     };

@@ -20,23 +20,32 @@ const CameraReader: FC = observer(() => {
         return (
             <>
                 <video ref={CameraReaderStore.videoRef} autoPlay playsInline></video>
-                <div className={styles.aim} style={{
-                    width: canvasWidth,
-                    height: canvasHeight,
-                    top: `calc((100% - ${canvasHeight}px) / 2)`,
-                    left: `calc((100% - ${canvasWidth}px) / 2)`,
-                }}/>
+                {
+                    CameraReaderStore.stream && !CameraReaderStore.cameraStopped &&
+                    <div className={styles.aim} style={{
+                        width: canvasWidth,
+                        height: canvasHeight,
+                        top: `calc((100% - ${canvasHeight}px) / 2)`,
+                        left: `calc((100% - ${canvasWidth}px) / 2)`,
+                    }}/>
+                }
                 {
                     CameraReaderStore.cameraStopped &&
-                    <div
-                        className={"button__white"}
-                        onClick={CameraReaderStore.startCamera.bind(CameraReaderStore)}
-                        style={{position: "absolute"}}
-                    >
-                        <Reload/>
-                        Перезапустить камеру
-                    </div>
+                    (
+                        <div style={{position: "absolute"}}>
+                            {CameraReaderStore.scannedSuccess && <div className={styles.scannedSuccess}>Успешно отсканированно!</div>}
+                            <div
+                                className={"button__white"}
+                                onClick={CameraReaderStore.startCamera.bind(CameraReaderStore)}
+                            >
+                                <Reload/>
+                                Перезапустить камеру
+                            </div>
+                        </div>
+                    )
+
                 }
+
             </>
         )
     } else if (CameraReaderStore.cameraLoading) {
