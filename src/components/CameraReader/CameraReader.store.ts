@@ -79,7 +79,6 @@ class CameraReaderStore {
 
         try {
             this.stream = await navigator.mediaDevices.getUserMedia(this.constraints);
-            console.log(this.videoRef?.current)
 
             if (this.videoRef?.current) {
                 this.videoRef.current.srcObject = this.stream;

@@ -6,8 +6,11 @@ import ResultsStore from "../Results/Results.store.ts";
 class QrFileReaderStore {
     dragIsActive = false
 
-    handleFileChange (input: ChangeEvent<HTMLInputElement> & FileList) {
-        const file = input.target?.files?.[0] || input[0];
+    handleFileChange(input: ChangeEvent<HTMLInputElement>) {
+        this.addFileToResults(input.target.files?.[0])
+    }
+
+    addFileToResults (file: File | undefined ) {
         if(!file) return
 
         const reader = new FileReader();
@@ -45,7 +48,7 @@ class QrFileReaderStore {
         this.dragIsActive = false
 
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-            this.handleFileChange(e.dataTransfer.files);
+            this.addFileToResults(e.dataTransfer.files[0]);
         }
     }
 
