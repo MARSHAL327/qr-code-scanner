@@ -35,6 +35,7 @@ class CameraReaderStore {
             },
             facingMode: "environment"
         },
+        audio: false
     };
 
     /**
@@ -47,6 +48,7 @@ class CameraReaderStore {
         const res = await QrReaderStore.readBlob(blob)
 
         if (res.length <= 0 || this.cameraStopped || res[0].text.trim() === "") return
+        console.log(blob)
 
         ResultsStore.addResult({
             src: URL.createObjectURL(blob),

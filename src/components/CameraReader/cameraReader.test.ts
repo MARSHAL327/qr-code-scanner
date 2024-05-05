@@ -1,0 +1,5 @@
+describe('CameraReader', () => {
+    test('', () => {
+
+    })
+})
