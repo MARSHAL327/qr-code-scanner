@@ -3,7 +3,7 @@ import {createRef} from "react";
 import QrReaderStore from "../../stores/qrReader.store.ts";
 import ResultsStore from "../Results/Results.store.ts";
 
-interface ICanvasParams{
+interface ICanvasParams {
     width: number;
     height: number;
 }
@@ -19,7 +19,7 @@ class CameraReaderStore {
         height: 200,
     }
     cameraLoading: boolean = true
-    cameraStopped: boolean = true
+    cameraStopped: boolean = false
     scannedSuccess: boolean = false
     constraints: MediaStreamConstraints = {
         video: {
@@ -33,7 +33,6 @@ class CameraReaderStore {
                 ideal: 1080,
                 max: 1440,
             },
-            facingMode: "user"
         },
     };
 
@@ -46,7 +45,7 @@ class CameraReaderStore {
         this.scannedSuccess = true
         const res = await QrReaderStore.readBlob(blob)
 
-        if (res.length <= 0 || this.cameraStopped) return
+        if (res.length <= 0 || this.cameraStopped || res[0].text.trim() === "") return
 
         ResultsStore.addResult({
             src: URL.createObjectURL(blob),
@@ -58,7 +57,7 @@ class CameraReaderStore {
     }
 
     /**
-     * Добавляет кадр на canvas
+     * Создаёт canvas, рисует изображение и затем передаёт изображение на обработку в processFrame
      */
     readCameraFrame() {
         const canvas = document.createElement("canvas");
