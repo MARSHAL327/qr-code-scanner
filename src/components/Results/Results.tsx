@@ -27,7 +27,7 @@ const Results: FC = observer(() => {
                         ref={el => resultsRef.current[idx] = el!}
                     >
                         <div className={styles.results__item__title}>
-                            <CopyButton text={result.text} key={result.id}/>
+                            <CopyButton text={ResultsStore.getClearProcessingText(result.text)} key={result.id}/>
                             <span>Сканирование #{result.id}</span>
                         </div>
                         <div className={styles.results__item__content}>

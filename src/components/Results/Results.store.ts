@@ -85,6 +85,15 @@ class ResultsStore{
         return text
     }
 
+    /**
+     * Удаляет все HTML теги
+     *
+     * @param text
+     */
+    getClearProcessingText(text: string){
+        return this.processingTemplates(text).replace(/<(.|\n)*?>/g, '')
+    }
+
     constructor(){
         makeAutoObservable(this)
     }
