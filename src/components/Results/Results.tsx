@@ -8,7 +8,7 @@ const Results: FC = observer(() => {
     const resultsRef = useRef<HTMLDivElement[]>([]);
 
     useEffect(() => {
-        if(resultsRef.current.length > 0){
+        if(resultsRef.current.length > 0 && window.outerWidth <= 768){
             resultsRef.current[0].scrollIntoView({
                 behavior: "smooth",
             });
