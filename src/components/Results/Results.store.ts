@@ -1,5 +1,5 @@
 import {makeAutoObservable} from "mobx";
-import {IResults, ResultsType} from "../../models/types.ts";
+import {IResults} from "../../models/types.ts";
 
 interface ITemplates{
     regex: RegExp,
@@ -12,12 +12,12 @@ interface ITemplates{
  *
  */
 class ResultsStore{
-    results: ResultsType = []
+    results: IResults[] = []
 
     /**
      * Для получения результатов в обратном порядке, чтобы свеживе были сверху
      */
-    get reverseResults(): ResultsType {
+    get reverseResults(): IResults[] {
         return this.results.length > 0 ? this.results.slice().sort((a, b) => b.id - a.id) : []
     }
 

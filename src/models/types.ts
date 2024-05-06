@@ -3,5 +3,3 @@ export interface IResults {
     src: string,
     id: number;
 }
-
-export type ResultsType = IResults[]
