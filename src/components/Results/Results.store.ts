@@ -1,6 +1,11 @@
 import {makeAutoObservable} from "mobx";
 import {IResults, ResultsType} from "../../models/types.ts";
 
+interface ITemplates{
+    regex: RegExp,
+    call: (match: string, ...params: string[]) => string
+}
+
 /**
  *
  * Класс для обработки результатов
@@ -27,6 +32,57 @@ class ResultsStore{
         result.id = lastId + 1
 
         this.results = [...this.results, result];
+    }
+
+    /**
+     * Функция для преобразлвания ссылок, wifi, телефонов и email в кликабельные ссылки
+     * Есть шаблон с помощью которго можно добавить новый тип преобразования
+     *
+     * @param text
+     */
+    processingTemplates(text: string) {
+        const templates: ITemplates[] = [
+            {
+                regex: /tel:((?:\+|\d)[\d\-\(\) ]{9,}\d)/gi,
+                call: replaceLink
+            },
+            {
+                regex: /mailto:(.*@.*\.[A-Z]{2,4})/gi,
+                call: replaceLink
+            },
+            {
+                regex: /(https?:\/\/[^\s]+)/gi,
+                call: replaceLink
+            },
+            {
+                regex: /WIFI:\S:(.*?);T:(.*?);P:(.*?)(?:;H:(.*?))?;;/g,
+                call: replaceWifi
+            }
+        ]
+
+        function replaceLink(match: string, ...params: string[]) {
+            return `<a href="${match}">${params[0]}</a>`;
+        }
+
+        function replaceWifi(_match: string, ...params: string[]) {
+            const wifiFields = {
+                "Название": params[0],
+                "Тип": params[1],
+                "Пароль": params[2],
+                "Скрытая сеть": params[3],
+            }
+
+            return Object
+                .entries(wifiFields)
+                .map(([key, value]) => (value ? `${key}: ${value}` : ""))
+                .join("<br>");
+        }
+
+        templates.map(template => {
+            text = text.replace(template.regex, template.call);
+        })
+
+        return text
     }
 
     constructor(){
