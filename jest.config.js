@@ -13,14 +13,14 @@ export default {
     // "^.+\\.svg$": "jest-transformer-svg",
     // "^.+\\.svg": "jest-svg-transformer",
     // "^.+\\.svg": "svg-jest-transformer"
-    "^.+\\.svg$": '<rootDir>/config/jest/svgTransform.ts',
+    // "^.+\\.svg?react$": '<rootDir>/config/jest/svgTransform.ts',
     // "^.+\\.svg$": '<rootDir>/config/jest/svgTransform.ts',
     // process `*.tsx` files with `ts-jest`
   },
   moduleNameMapper: {
     '\\.(gif|ttf|eot|png)$': '<rootDir>/config/jest/fileMock.ts',
     '^.+\\.(css|less|scss|sass)$': '<rootDir>/config/jest/styleMock.ts',
-    // '\\.svg$': '<rootDir>/config/jest/__mocks__/svg.ts',
+    '^.+\\.svg$': '<rootDir>/config/jest/__mocks__/svg.ts',
   },
   setupFilesAfterEnv: ['./config/jest/setupTests.ts'],
   moduleFileExtensions: [
