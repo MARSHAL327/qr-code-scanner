@@ -1,2 +1,2 @@
-export default 'SvgrURL'
-export const ReactComponent = 'div'
+'use strict';
+module.exports = 'jest-transformer-svg';
