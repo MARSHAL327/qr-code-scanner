@@ -60,6 +60,25 @@ class ResultsStore{
             }
         ]
 
+        function isJSONString(str: string): boolean {
+            try {
+                JSON.parse(str);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        function replaceJSON(jsonString: string): string {
+            try {
+                const jsonObject = JSON.parse(jsonString);
+                return JSON.stringify(jsonObject, null, 2);
+            } catch (error) {
+                console.error('Ошибка при разборе JSON:', error);
+                return jsonString;
+            }
+        }
+
         function replaceLink(match: string, ...params: string[]) {
             return `<a href="${match}">${params[0]}</a>`;
         }
@@ -78,9 +97,13 @@ class ResultsStore{
                 .join("<br>");
         }
 
-        templates.map(template => {
-            text = text.replace(template.regex, template.call);
-        })
+        if( isJSONString(text) ){
+            text = `<pre>${replaceJSON(text)}</pre>`;
+        } else {
+            templates.map(template => {
+                text = text.replace(template.regex, template.call);
+            })
+        }
 
         return text
     }
